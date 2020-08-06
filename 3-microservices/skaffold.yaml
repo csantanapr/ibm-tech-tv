@@ -1,0 +1,53 @@
+apiVersion: skaffold/v2beta6
+kind: Config
+
+profiles:
+  - name: dev
+    activation:
+      - command: dev
+    build:
+      artifacts:
+        - image: csantanapr/ibm-tech-tv-storage
+          context: a-cloud-storage
+          docker:
+            buildArgs:
+              ENV: development
+          sync:
+            infer:
+              - "**/*.js"
+        - image: csantanapr/ibm-tech-tv-vision
+          context: b-watson-vision
+          docker:
+            buildArgs:
+              ENV: development
+          sync:
+            infer:
+              - "**/*.js"
+  - name: debug
+    activation:
+      - command: debug
+    build:
+      artifacts:
+        - image: csantanapr/ibm-tech-tv-storage
+          context: a-cloud-storage
+          docker:
+            buildArgs:
+              ENV: development
+          sync:
+            infer:
+              - "**/*.js"
+        - image: csantanapr/ibm-tech-tv-vision
+          context: b-watson-vision
+          docker:
+            buildArgs:
+              ENV: development
+          sync:
+            infer:
+              - "**/*.js"
+
+build:
+  artifacts:
+    - image: csantanapr/ibm-tech-tv-storage
+      context: a-cloud-storage
+    - image: csantanapr/ibm-tech-tv-vision
+      context: b-watson-vision
