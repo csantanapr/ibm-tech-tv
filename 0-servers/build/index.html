@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>The File Uploader</title>
+  <link rel="stylesheet" type = "text/css" href="style.css">
+</head>
+<body>
+  <script async src="script.js"></script>
+  <h1>The Best AI App ever</h1>
+  <form id="myform" enctype="multipart/form-data">
+    <input id="theFile" type="file" name="body" required>
+    <fieldset>
+      <legend>Choose a model</legend>
+      <input type="radio" checked id="default" name="model">
+      <label for="default">Default</label><br/>
+      <input type="radio" id="food" name="model">
+      <label for="food">Food</label>
+    </fieldset>
+    
+  </form>
+  <p><button onclick="uploadImage()">Analyze</button></p>
+  
+  <img src="https://via.placeholder.com/200x200" class="my-image" style="max-width: 200px; height: auto;"></img>
+  <p>Objects Detected:</p>
+  <p id='aiData'></p>
+</body>
+</html>

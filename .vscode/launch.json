@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Container: Attach Node",
+            "remoteRoot": "/user-app",
+            "localRoot": "${workspaceFolder}/1-containers"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Microservice: Storage",
+            "remoteRoot": "/user-app",
+            "localRoot": "${workspaceFolder}/3-microservices/a-cloud-storage"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Microservice: Vision",
+            "remoteRoot": "/user-app",
+            "localRoot": "${workspaceFolder}/3-microservices/b-watson-vision"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Node Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "cwd": "${workspaceFolder}/0-servers",
+            "program": "${workspaceFolder}/0-servers/server.js"
+        }
+    ]
+}

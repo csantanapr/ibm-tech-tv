@@ -1,0 +1,101 @@
+{
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+        "content-type": "application/json",
+        "cache-control": "no-cache, no-store",
+        "content-security-policy": "default-src 'none'",
+        "expires": "0",
+        "pragma": "no-cache",
+        "strict-transport-security": "max-age=31536000; includeSubDomains;",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "x-global-transaction-id": "2f395af5107561d4f6cd57f092c48704",
+        "x-dp-watson-tran-id": "2f395af5107561d4f6cd57f092c48704",
+        "content-length": "2846",
+        "x-edgeconnect-midmile-rtt": "32",
+        "x-edgeconnect-origin-mex-latency": "709",
+        "date": "Tue, 04 Aug 2020 01:36:25 GMT",
+        "connection": "close"
+    },
+    "result": {
+        "images": [
+            {
+                "classifiers": [
+                    {
+                        "classifier_id": "default",
+                        "name": "default",
+                        "classes": [
+                            {
+                                "class": "limousine",
+                                "score": 0.564,
+                                "type_hierarchy": "/vehicle/wheeled vehicle/car/limousine"
+                            },
+                            {
+                                "class": "car",
+                                "score": 0.567
+                            },
+                            {
+                                "class": "wheeled vehicle",
+                                "score": 0.757
+                            },
+                            {
+                                "class": "vehicle",
+                                "score": 0.762
+                            },
+                            {
+                                "class": "Pullman car",
+                                "score": 0.535,
+                                "type_hierarchy": "/vehicle/wheeled vehicle/railcar/passenger car/Pullman car"
+                            },
+                            {
+                                "class": "passenger car",
+                                "score": 0.615
+                            },
+                            {
+                                "class": "railcar",
+                                "score": 0.635
+                            },
+                            {
+                                "class": "bus",
+                                "score": 0.515
+                            },
+                            {
+                                "class": "assembly plant",
+                                "score": 0.5,
+                                "type_hierarchy": "/factory/assembly plant"
+                            },
+                            {
+                                "class": "factory",
+                                "score": 0.502
+                            },
+                            {
+                                "class": "public transport",
+                                "score": 0.6
+                            },
+                            {
+                                "class": "train",
+                                "score": 0.6
+                            },
+                            {
+                                "class": "transport",
+                                "score": 0.599
+                            },
+                            {
+                                "class": "black color",
+                                "score": 0.958
+                            },
+                            {
+                                "class": "coal black color",
+                                "score": 0.69
+                            }
+                        ]
+                    }
+                ],
+                "image": "8364d0f4-d0af-40ee-918e-20b7728ab9ac.jpg"
+            }
+        ],
+        "images_processed": 1,
+        "custom_classes": 0
+    }
+}

@@ -1,0 +1,35 @@
+apiVersion: skaffold/v2beta6
+kind: Config
+
+profiles:
+  - name: dev
+    activation:
+      - command: dev
+    build:
+      artifacts:
+        - image: csantanapr/ibm-tech-tv
+          context: ../1-containers
+          docker:
+            buildArgs:
+              ENV: development
+          sync:
+            infer:
+              - "**/*.js"
+  - name: debug
+    activation:
+      - command: debug
+    build:
+      artifacts:
+        - image: csantanapr/ibm-tech-tv
+          context: ../1-containers
+          docker:
+            buildArgs:
+              ENV: development
+          sync:
+            infer:
+              - "**/*.js"
+
+build:
+  artifacts:
+    - image: csantanapr/ibm-tech-tv
+      context: ../1-containers
