@@ -1,6 +1,5 @@
 // Module dependencies
 const bodyParser = require('body-parser')
-const security = require('./security')
 const isProduction = process.env.NODE_ENV === 'production'
 const formatters = {
   level (label, number) {
@@ -15,7 +14,6 @@ const pino = require('pino-http')({
 })
 
 module.exports = function newsApp (app) {
-  security(app)
 
   app.use(bodyParser.json({ limit: '10mb' }))
 

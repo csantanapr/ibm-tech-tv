@@ -1,45 +1,47 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: watson-vision
+  name: vision
   labels:
-    app: watson-vision
+    app: vision
 spec:
   ports:
     - name: http
       port: 80
       targetPort: http
-  type: LoadBalancer
   selector:
-    app: watson-vision
+    app: vision
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: watson-vision
+  name: vision
   annotations:
     app.openshift.io/vcs-ref: master
     app.openshift.io/vcs-uri: https://github.com/csantanapr/ibm-tech-tv
   labels:
-    app: watson-vision
-    app.kubernetes.io/component: watson-vision
-    app.kubernetes.io/instance: watson-vision
+    app: vision
+    version: v1
+    app.kubernetes.io/component: vision
+    app.kubernetes.io/instance: vision
     app.kubernetes.io/name: nodejs
-    app.kubernetes.io/part-of: watson-vision-app
+    app.kubernetes.io/part-of: vision-app
     app.openshift.io/runtime: nodejs
     app.openshift.io/runtime-version: "14"
 spec:
   selector:
     matchLabels:
-      app: watson-vision
+      app: vision
+      version: v1
   template:
     metadata:
       labels:
-        app: watson-vision
+        app: vision
+        version: v1
     spec:
       containers:
-        - name: watson-vision
-          image: csantanapr/ibm-tech-tv
+        - name: vision
+          image: csantanapr/ibm-tech-tv:v3
           ports:
             - containerPort: 8080
               name: http
