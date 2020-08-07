@@ -1,6 +1,7 @@
 apiVersion: skaffold/v2beta6
 kind: Config
-
+metadata:
+  name: --microservices
 profiles:
   - name: dev
     activation:
@@ -23,16 +24,16 @@ profiles:
           sync:
             infer:
               - "**/*.js"
-  - name: debug
+  - name: dbg
     activation:
-      - command: debug
+      - command: dbg
     build:
       artifacts:
         - image: csantanapr/ibm-tech-tv-storage
           context: a-cloud-storage
           docker:
             buildArgs:
-              ENV: development
+              ENV: debug
           sync:
             infer:
               - "**/*.js"
@@ -40,14 +41,17 @@ profiles:
           context: b-watson-vision
           docker:
             buildArgs:
-              ENV: development
+              ENV: debug
           sync:
             infer:
               - "**/*.js"
-
 build:
   artifacts:
     - image: csantanapr/ibm-tech-tv-storage
       context: a-cloud-storage
     - image: csantanapr/ibm-tech-tv-vision
       context: b-watson-vision
+deploy:
+  kubectl:
+    manifests:
+    - k8s/deployment.yaml

@@ -7,28 +7,30 @@
         {
             "type": "node",
             "request": "attach",
-            "name": "Container: Attach Node",
+            "name": "Vision",
             "remoteRoot": "/user-app",
             "localRoot": "${workspaceFolder}/1-containers"
         },
         {
             "type": "node",
             "request": "attach",
-            "name": "Microservice: Storage",
+            "name": "Cloud-Storage",
             "remoteRoot": "/user-app",
-            "localRoot": "${workspaceFolder}/3-microservices/a-cloud-storage"
+            "localRoot": "${workspaceFolder}/3-microservices/a-cloud-storage",
+            "port": 9229
         },
         {
             "type": "node",
             "request": "attach",
-            "name": "Microservice: Vision",
+            "name": "Watson-Vision",
             "remoteRoot": "/user-app",
-            "localRoot": "${workspaceFolder}/3-microservices/b-watson-vision"
+            "localRoot": "${workspaceFolder}/3-microservices/b-watson-vision",
+            "port": 9230
         },
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Node Program",
+            "name": "Legacy App",
             "skipFiles": [
                 "<node_internals>/**"
             ],
