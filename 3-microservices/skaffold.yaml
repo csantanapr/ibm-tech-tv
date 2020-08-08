@@ -24,27 +24,6 @@ profiles:
           sync:
             infer:
               - "**/*.js"
-  - name: dbg
-    activation:
-      - command: dbg
-    build:
-      artifacts:
-        - image: csantanapr/ibm-tech-tv-storage
-          context: a-cloud-storage
-          docker:
-            buildArgs:
-              ENV: debug
-          sync:
-            infer:
-              - "**/*.js"
-        - image: csantanapr/ibm-tech-tv-vision
-          context: b-watson-vision
-          docker:
-            buildArgs:
-              ENV: debug
-          sync:
-            infer:
-              - "**/*.js"
 build:
   artifacts:
     - image: csantanapr/ibm-tech-tv-storage

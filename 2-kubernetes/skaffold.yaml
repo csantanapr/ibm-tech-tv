@@ -1,6 +1,5 @@
 apiVersion: skaffold/v2beta6
 kind: Config
-
 profiles:
   - name: dev
     activation:
@@ -28,8 +27,11 @@ profiles:
           sync:
             infer:
               - "**/*.js"
-
 build:
   artifacts:
     - image: csantanapr/ibm-tech-tv
       context: ../1-containers
+deploy:
+  kubectl:
+    manifests:
+    - k8s/deployment.yaml

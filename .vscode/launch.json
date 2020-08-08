@@ -17,7 +17,7 @@
             "name": "Cloud-Storage",
             "remoteRoot": "/user-app",
             "localRoot": "${workspaceFolder}/3-microservices/a-cloud-storage",
-            "port": 9229
+            "port": 9230
         },
         {
             "type": "node",
@@ -25,7 +25,7 @@
             "name": "Watson-Vision",
             "remoteRoot": "/user-app",
             "localRoot": "${workspaceFolder}/3-microservices/b-watson-vision",
-            "port": 9230
+            "port": 9229
         },
         {
             "type": "node",

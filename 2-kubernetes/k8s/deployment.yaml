@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: vision
-          image: csantanapr/ibm-tech-tv:v3
+          image: csantanapr/ibm-tech-tv
           ports:
             - containerPort: 8080
               name: http
