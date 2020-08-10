@@ -49,9 +49,3 @@ skaffold dev
 ```bash
 skaffold run
 ```
-
-## Debug
-```
-skaffold debug --port-forward
-```
-Then you can attach Node debugger like Chrome or VSCode on localhost:9229
