@@ -5,6 +5,8 @@ const app = express()
 const fs = require('fs')
 const uuid = require('uuid')
 const os = require('os')
+const swaggerJSDoc = require('swagger-jsdoc');
+
 
 require('./config/express')(app)
 
@@ -38,6 +40,28 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 
+  /**
+   * @swagger
+   *
+   * /api/classify:
+   *   post:
+   *     summary: Submit Image to Detect Objects
+   *     operationId: classify
+   *     parameters:
+   *       - in: "body"
+   *         name: "image_data"
+   *         description: "Image to detect objects base64"
+   *         required: true
+   *     schema:
+   *       type: string
+   *     consumes:
+   *       - "application/json"
+   *     produces:
+   *       - "application/json"
+   *     responses:
+   *       '200':
+   *         description: Detect Objects in a submitted Image
+   */
 app.post('/api/classify', async (req, res, next) => {
   if (!req.body.image_data) {
     return next(new Error('image_data missing'))
