@@ -14,7 +14,6 @@ const pino = require('pino-http')({
 })
 
 module.exports = function newsApp (app) {
-
   app.use(bodyParser.json({ limit: '10mb' }))
 
   app.get('/health', (req, res) => {

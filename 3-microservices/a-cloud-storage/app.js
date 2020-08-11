@@ -21,7 +21,7 @@ app.get('/api/storage', async (req, res, next) => {
     const objectName = req.query.ext ? `${uuid.v4()}.${req.query.ext}` : uuid.v4()
     const putUrl = await getUrls('putObject', objectName)
     const getUrl = await getUrls('getObject', objectName)
-    res.json({ putUrl: putUrl, getUrl: getUrl})
+    res.json({ putUrl: putUrl, getUrl: getUrl })
   } catch (err) {
     next(err)
   }

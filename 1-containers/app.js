@@ -20,7 +20,7 @@ const parseBase64Image = (imageString) => {
     return null
   }
   resource.type = matches[1] === 'jpeg' ? 'jpg' : matches[1]
-  resource.data = new Buffer(matches[2], 'base64')
+  resource.data = Buffer.from(matches[2], 'base64')
   return resource
 }
 
@@ -39,10 +39,10 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/classify', async (req, res, next) => {
-  if( ! req.body.image_data){
-    return next(new Error("image_data missing"))
+  if (!req.body.image_data) {
+    return next(new Error('image_data missing'))
   }
-  
+
   const resource = parseBase64Image(req.body.image_data)
   const temp = path.join(os.tmpdir(), `${uuid.v4()}.${resource.type}`)
   fs.writeFileSync(temp, resource.data)
@@ -60,6 +60,5 @@ app.post('/api/classify', async (req, res, next) => {
     next(err)
   }
 })
-
 
 module.exports = app

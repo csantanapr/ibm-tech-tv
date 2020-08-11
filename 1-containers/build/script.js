@@ -1,10 +1,10 @@
 /* eslint-env browser */
 /* eslint no-unused-vars: "off" */
-function setMainDisplayImage(imageData) {
+function setMainDisplayImage (imageData) {
   const myImage = document.querySelector('.my-image')
   myImage.src = imageData
 }
-function uploadImage() {
+function uploadImage () {
   const fileInput = document.getElementById('theFile')
   const file = fileInput.files[0]
   const reader = new FileReader()
@@ -22,7 +22,7 @@ function uploadImage() {
       body: JSON.stringify({ image_data: imageData, model: model })
     })
     if (response.status >= 400) {
-      document.getElementById('aiData').innerHTML = "Error: " + response.statusText
+      document.getElementById('aiData').innerHTML = 'Error: ' + response.statusText
     } else {
       const data = await response.json()
       console.log(JSON.stringify(data, null, 2))
@@ -32,7 +32,7 @@ function uploadImage() {
   }
   reader.readAsDataURL(file)
 }
-function tableFromJson(div, json) {
+function tableFromJson (div, json) {
   // Create a table.
   const table = document.createElement('table')
 

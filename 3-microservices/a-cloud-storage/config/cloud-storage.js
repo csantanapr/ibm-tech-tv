@@ -1,5 +1,5 @@
 const IBMCOS = require('ibm-cos-sdk')
-const rp = require('request-promise')
+const bent = require('bent')
 
 const CONFIG = {
   bucketName: process.env.CLOUD_OBJECT_STORAGE_BUCKETNAME,
@@ -47,13 +47,9 @@ const getS3Hmac = async (endpoint, serviceCredential) => {
    * The endpoints url provides a JSON consisting of all Endpoints for the user.
    */
 const getEndpoints = async (endpointsUrl) => {
-
-  const options = {
-    url: endpointsUrl,
-    method: 'GET'
-  }
-  const response = await rp(options)
-  return JSON.parse(response)
+  const request = bent(endpointsUrl, 'GET', 'json')
+  const response = await request()
+  return response
 }
 /*
    * Once we have the available endpoints, we need to extract the endpoint we need to use.
@@ -63,8 +59,8 @@ const findBucketEndpoint = (bucket, endpoints) => {
   const region = bucket.region || bucket.LocationConstraint.substring(0, bucket.LocationConstraint.lastIndexOf('-'))
   const serviceEndpoints = endpoints['service-endpoints']
   const regionUrls = serviceEndpoints['cross-region'][region] ||
-    serviceEndpoints.regional[region] ||
-    serviceEndpoints['single-site'][region]
+                     serviceEndpoints.regional[region] ||
+                     serviceEndpoints['single-site'][region]
 
   if (!regionUrls.public || Object.keys(regionUrls.public).length === 0) {
     return ''
@@ -91,7 +87,6 @@ const setupBucketCORS = async (s3, bucketName, corsConfig) => {
   const data = await s3.putBucketCors(params).promise()
   return data
 }
-
 
 module.exports = async () => {
   try {
@@ -129,7 +124,6 @@ module.exports = async () => {
 
     s3.bucketName = CONFIG.bucketName
     return s3
-    
   } catch (err) {
     console.error('Found an error in S3 operations')
     console.error('statusCode: ', err.statusCode)
