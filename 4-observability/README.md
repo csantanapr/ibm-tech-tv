@@ -9,7 +9,7 @@
 Create secret with Watson Visual Recognition credentials
 ```
 WATSON_VISION_COMBINED_APIKEY=<COPY-YOUR-API-KEY-HERE>
-WATSON_VISION_COMBINED_URL=https://us-south.visual-recognition.watson.cloud.ibm.com
+WATSON_VISION_COMBINED_URL=https://api.us-south.visual-recognition.watson.cloud.ibm.com/instances/<INSTANCE ID>
 ```
 ```
 kubectl create secret generic watson \

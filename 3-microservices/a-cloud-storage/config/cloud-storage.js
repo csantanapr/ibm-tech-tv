@@ -13,7 +13,7 @@ const CONFIG = {
   }
 }
 const defaultEndpoint = 's3.us.cloud-object-storage.appdomain.cloud'
-const corsConfig = {
+const CORS_CONFIG = {
   CORSRules: [{
     AllowedHeaders: ['*'],
     AllowedMethods: ['PUT', 'GET'],
@@ -120,7 +120,7 @@ module.exports = async () => {
        */
     s3.endpoint = findBucketEndpoint(bucket, endpoints)
 
-    await setupBucketCORS(s3, bucketName, corsConfig)
+    await setupBucketCORS(s3, bucketName, CORS_CONFIG)
 
     s3.bucketName = CONFIG.bucketName
     return s3
