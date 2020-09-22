@@ -1,0 +1,19 @@
+# dependencies
+/node_modules
+
+# testing
+/coverage
+src/**/*.test.js
+/server/tests
+
+# misc
+.DS_Store
+.env
+.env.example
+
+npm-debug.log*
+
+README.md
+Dockerfile
+.gitignore
+.dockerignore

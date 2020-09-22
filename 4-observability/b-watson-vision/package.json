@@ -1,0 +1,25 @@
+{
+  "name": "watson-vision",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "../node_modules/.bin/nodemon server.js",
+    "production": "node server.js",
+    "development": "../node_modules/.bin/nodemon server.js",
+    "debug": "../node_modules/.bin/nodemon --inspect=0.0.0.0 server.js",
+    "lint": "standard --fix"
+  },
+  "keywords": [],
+  "author": "Carlos Santana <csantana@us.ibm.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "ibm-watson": "^5.6.1",
+    "nodemon": "^2.0.4",
+    "pino-http": "^5.2.0",
+    "pino-pretty": "^4.1.0"
+  }
+}
