@@ -16,15 +16,15 @@
             "request": "attach",
             "name": "Cloud-Storage",
             "remoteRoot": "/user-app",
-            "localRoot": "${workspaceFolder}/3-microservices/a-cloud-storage",
-            "port": 9230
+            "localRoot": "${workspaceFolder}/4-microservices/a-cloud-storage",
+            "port": 9229
         },
         {
             "type": "node",
             "request": "attach",
             "name": "Watson-Vision",
             "remoteRoot": "/user-app",
-            "localRoot": "${workspaceFolder}/3-microservices/b-watson-vision",
+            "localRoot": "${workspaceFolder}/4-microservices/b-watson-vision",
             "port": 9229
         },
         {

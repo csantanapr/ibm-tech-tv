@@ -12,7 +12,7 @@ const CONFIG = {
     endpoints: process.env.CLOUD_OBJECT_STORAGE_ENDPOINTS
   }
 }
-const defaultEndpoint = 's3.us.cloud-object-storage.appdomain.cloud'
+const defaultEndpoint = process.env.CLOUD_OBJECT_STORAGE_DEFAULT_ENDPOINT || 's3.us.cloud-object-storage.appdomain.cloud'
 const corsConfig = {
   CORSRules: [{
     AllowedHeaders: ['*'],
