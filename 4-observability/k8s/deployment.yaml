@@ -28,14 +28,19 @@ metadata:
     app.kubernetes.io/part-of: ibm-tech-tv-app
     app.openshift.io/runtime: nodejs
     app.openshift.io/runtime-version: "14"
+    version: v1
 spec:
   selector:
     matchLabels:
       app: cloud-storage
+      version: v1
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
       labels:
         app: cloud-storage
+        version: v1
     spec:
       containers:
         - name: cloud-storage
@@ -92,14 +97,19 @@ metadata:
     app.kubernetes.io/part-of: ibm-tech-tv-app
     app.openshift.io/runtime: nodejs
     app.openshift.io/runtime-version: "14"
+    version: v1
 spec:
   selector:
     matchLabels:
       app: watson-vision
+      version: v1
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
       labels:
         app: watson-vision
+        version: v1
     spec:
       containers:
         - name: watson-vision
@@ -116,7 +126,9 @@ spec:
           resources:
             requests:
               memory: "100Mi"
-              cpu: "5m"
+              cpu: "1m"
+            limits:
+                cpu: "2m"
           livenessProbe:
             tcpSocket:
               port: 8080

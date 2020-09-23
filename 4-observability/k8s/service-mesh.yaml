@@ -1,0 +1,43 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: ibm-tech-tv-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*-istio-system.playgrowth-apps-p038in-8946bbc006b7c6eb0829d088919818bb-0000.us-east.containers.appdomain.cloud"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ibm-tech-tv
+spec:
+  hosts:
+  - "*-istio-system.playgrowth-apps-p038in-8946bbc006b7c6eb0829d088919818bb-0000.us-east.containers.appdomain.cloud"
+  gateways:
+  - ibm-tech-tv-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: cloud-storage
+        subset: v1
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: cloud-storage
+spec:
+  host: cloud-storage
+  subsets:
+  - name: v1
+    labels:
+      version: v1

@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: ibm-tech-tv
+  namespace: istio-system
+spec:
+  host: ibm-tech-tv-istio-system.playgrowth-apps-p038in-8946bbc006b7c6eb0829d088919818bb-0000.us-east.containers.appdomain.cloud
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: istio-ingressgateway
+    weight: 100
+  wildcardPolicy: None
