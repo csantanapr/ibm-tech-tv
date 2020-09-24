@@ -68,6 +68,9 @@ spec:
             requests:
               memory: "100Mi"
               cpu: "5m"
+            limits:
+              memory: "150Mi"
+              cpu: "200m"
           livenessProbe:
             tcpSocket:
               port: 8080
@@ -143,6 +146,9 @@ spec:
             requests:
               memory: "100Mi"
               cpu: "5m"
+            limits:
+              memory: "150Mi"
+              cpu: "100m"
           livenessProbe:
             tcpSocket:
               port: 8080

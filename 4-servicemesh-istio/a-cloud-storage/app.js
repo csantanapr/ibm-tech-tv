@@ -19,6 +19,8 @@ app.get('/', (req, res) => {
 app.get('/api/storage', async (req, res, next) => {
   try {
     const objectName = req.query.ext ? `${uuid.v4()}.${req.query.ext}` : uuid.v4()
+    // FIXME: easter egg here
+    blockCpuFor(10000000)
     const putUrl = await getUrls('putObject', objectName)
     const getUrl = await getUrls('getObject', objectName)
     res.json({ putUrl: putUrl, getUrl: getUrl })
@@ -44,6 +46,16 @@ app.post('/api/classify', async (req, res, next) => {
   }
 })
 
+function getTracingHeaders(req){
+  let contextHeaders = {};
+  Object.keys(req.headers).forEach(function(key) {
+    if(key.toLowerCase().startsWith('x-b3') || key.toLowerCase() === 'x-request-id' || key.toLowerCase() === 'b3'){
+      contextHeaders[key]=req.headers[key]
+    }
+  });
+  return contextHeaders;
+}
+
 const getUrls = async (operation, fileName, expires) => {
   const expiresIn = expires || 60 * 15 // url expires in 15 mins if not specified.
   let response
@@ -57,6 +69,8 @@ const getUrls = async (operation, fileName, expires) => {
     console.error(err)
     throw err
   }
+
+
   return response
 }
 
@@ -65,3 +79,10 @@ const main = async () => {
 }
 main()
 module.exports = app
+function blockCpuFor(count) {
+  console.log("bussy work here :-)")
+  while(count > 0) {
+    let r = Math.random() * Math.random();
+    count--
+  }
+}
