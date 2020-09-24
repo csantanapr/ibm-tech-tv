@@ -12,6 +12,13 @@ spec:
   selector:
     app: cloud-storage
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cloud-storage
+  labels:
+    account: cloud-storage
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -36,12 +43,13 @@ spec:
       version: v1
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
+      #annotations:
+      #  sidecar.istio.io/inject: "true"
       labels:
         app: cloud-storage
         version: v1
     spec:
+      serviceAccountName: cloud-storage
       containers:
         - name: cloud-storage
           image: csantanapr/ibm-tech-tv-storage
@@ -60,6 +68,9 @@ spec:
             requests:
               memory: "100Mi"
               cpu: "5m"
+            limits:
+              memory: "150Mi"
+              cpu: "50m"
           livenessProbe:
             tcpSocket:
               port: 8080
@@ -81,6 +92,13 @@ spec:
       targetPort: http
   selector:
     app: watson-vision
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: watson-vision
+  labels:
+    account: watson-vision
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -105,12 +123,13 @@ spec:
       version: v1
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
+      #annotations:
+      #  sidecar.istio.io/inject: "true"
       labels:
         app: watson-vision
         version: v1
     spec:
+      serviceAccountName: watson-vision
       containers:
         - name: watson-vision
           image: csantanapr/ibm-tech-tv-vision
@@ -120,6 +139,8 @@ spec:
           env:
             - name: PORT
               value: "8080"
+            - name: JAEGER_ENDPOINT
+              value: http://jaeger-collector.istio-system.svc:14268/api/traces
           envFrom:
             - secretRef:
                 name: watson
@@ -127,6 +148,9 @@ spec:
             requests:
               memory: "100Mi"
               cpu: "5m"
+            limits:
+              memory: "150Mi"
+              cpu: "100m"
           livenessProbe:
             tcpSocket:
               port: 8080
