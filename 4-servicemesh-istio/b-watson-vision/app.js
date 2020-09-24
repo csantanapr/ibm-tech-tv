@@ -4,10 +4,10 @@ const app = express()
 
 require('./config/express')(app)
 
-app.use(require('./config/tracing.js'))
+// FIXME: easter egg here
+// app.use(require('./config/tracing.js'))
 
-//FIXME: easter egg here
-//const tracer = require('opentracing').globalTracer()
+const tracer = require('opentracing').globalTracer()
 
 let watson
 try {
@@ -34,21 +34,31 @@ app.post('/api/classify', async (req, res, next) => {
     classifierIds: [model]
   }
   try {
-    const span = req.span || tracer.startSpan('watson-call', { childOf: req.span })
-    const response = await watson.classify(classifyParams)
-    span || span.setTag('response', response)
-    span || span.finish()
-    processWatsonData(res, response, span)
+    if (req.span) {
+      const span = tracer.startSpan('watson-call', { childOf: req.span })
+      const response = await watson.classify(classifyParams)
+      span.setTag('response', response)
+      span.finish()
+      processWatsonData(res, response, span)
+    } else {
+      const response = await watson.classify(classifyParams)
+      processWatsonData(res, response)
+    }
   } catch (err) {
     next(err)
   }
 })
 
-function processWatsonData(res, response, parent){
-  const span = parent || tracer.startSpan('process-data', { childOf: parent })
-  span || span.log({ event: 'process', message: 'simulate some process work with the data' })
-  //FIXME: easter egg here
-  setTimeout(function(){res.json(response); span || span.finish();},5000)
+function processWatsonData (res, response, parent) {
+  if (parent) {
+    const span = tracer.startSpan('process-data', { childOf: parent })
+    span.log({ event: 'process', message: 'simulate some process work with the data' })
+    // FIXME: easter egg here
+    setTimeout(function () { res.json(response); span.finish() }, 5000)
+  } else {
+    // FIXME: easter egg here
+    setTimeout(function () { res.json(response) }, 5000)
+  }
 }
 
 module.exports = app

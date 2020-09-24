@@ -39,23 +39,28 @@ app.post('/api/classify', async (req, res, next) => {
     model: model
   }
   try {
-    //FIXME: easter egg here
-    const response = await classify('/api/classify', classifyParams)
-    //const response = await classify('/api/classify', classifyParams, getTracingHeaders(req))
+    // FIXME: easter egg here
+    const propaGate = false
+    let response
+    if (propaGate) {
+      response = await classify('/api/classify', classifyParams, getTracingHeaders(req))
+    } else {
+      response = await classify('/api/classify', classifyParams)
+    }
     res.json(response)
   } catch (err) {
     next(err)
   }
 })
 
-function getTracingHeaders(req){
-  let contextHeaders = {};
-  Object.keys(req.headers).forEach(function(key) {
-    if(key.toLowerCase().startsWith('x-b3') || key.toLowerCase() === 'x-request-id' || key.toLowerCase() === 'b3'){
-      contextHeaders[key]=req.headers[key]
+function getTracingHeaders (req) {
+  const contextHeaders = {}
+  Object.keys(req.headers).forEach(function (key) {
+    if (key.toLowerCase().startsWith('x-b3') || key.toLowerCase() === 'x-request-id' || key.toLowerCase() === 'b3') {
+      contextHeaders[key] = req.headers[key]
     }
-  });
-  return contextHeaders;
+  })
+  return contextHeaders
 }
 
 const getUrls = async (operation, fileName, expires) => {
@@ -72,7 +77,6 @@ const getUrls = async (operation, fileName, expires) => {
     throw err
   }
 
-
   return response
 }
 
@@ -81,10 +85,12 @@ const main = async () => {
 }
 main()
 module.exports = app
-function blockCpuFor(count) {
-  console.log("bussy work here :-)")
-  while(count > 0) {
-    let r = Math.random() * Math.random();
+function blockCpuFor (count) {
+  console.log('bussy work here :-)')
+  let r
+  while (count > 0) {
+    r = Math.random() * Math.random()
     count--
   }
+  console.log('done with bussy work', r)
 }

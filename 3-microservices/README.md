@@ -6,38 +6,15 @@
 - Configure Kubernetes/OpenShift cluster CLI access
 
 ## Secrets
-Create secret with Watson Visual Recognition credentials
+Create secret with Watson Visual Recognition and Cloud Object Storage s3 hmac credentials
 ```
-WATSON_VISION_COMBINED_APIKEY=<COPY-YOUR-API-KEY-HERE>
-WATSON_VISION_COMBINED_URL=https://api.us-south.visual-recognition.watson.cloud.ibm.com/instances/<INSTANCE ID>
+cp k8s/secrets.yaml.template secrets.yaml
 ```
-```
-kubectl create secret generic watson \
---from-literal=WATSON_VISION_COMBINED_APIKEY=$WATSON_VISION_COMBINED_APIKEY \
---from-literal=WATSON_VISION_COMBINED_URL=$WATSON_VISION_COMBINED_URL
-```
-
-Create secret with Cloud Object Storage s3 hmac credentials
-```
-CLOUD_OBJECT_STORAGE_BUCKETNAME=<ENTER-YOUR-BUCKET-NAME-HERE>
-CLOUD_OBJECT_STORAGE_APIKEY=<COPY-YOUR-API-KEY-HERE>
-CLOUD_OBJECT_STORAGE_HMAC_ACCESS_KEY_ID=<KEY>
-CLOUD_OBJECT_STORAGE_HMAC_SECRET_ACCESS_KEY=<SECRET>
-CLOUD_OBJECT_STORAGE_ENDPOINTS=https://control.cloud-object-storage.cloud.ibm.com/v2/endpoints
-```
-
-```
-kubectl create secret generic cos \
---from-literal=CLOUD_OBJECT_STORAGE_BUCKETNAME=$CLOUD_OBJECT_STORAGE_BUCKETNAME \
---from-literal=CLOUD_OBJECT_STORAGE_APIKEY=$CLOUD_OBJECT_STORAGE_APIKEY \
---from-literal=CLOUD_OBJECT_STORAGE_HMAC_ACCESS_KEY_ID=$CLOUD_OBJECT_STORAGE_HMAC_ACCESS_KEY_ID \
---from-literal=CLOUD_OBJECT_STORAGE_HMAC_SECRET_ACCESS_KEY=$CLOUD_OBJECT_STORAGE_HMAC_SECRET_ACCESS_KEY \
---from-literal=CLOUD_OBJECT_STORAGE_ENDPOINTS=$CLOUD_OBJECT_STORAGE_ENDPOINTS
-```
+Edit and enter your credentials into `secrets.yaml`
 
 ## Change directory
 ```
-cd 4-observability/
+cd 3-microservices/
 ```
 
 ## Run
