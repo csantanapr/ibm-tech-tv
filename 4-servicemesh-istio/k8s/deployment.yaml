@@ -43,8 +43,8 @@ spec:
       version: v1
   template:
     metadata:
-      #annotations:
-      #  sidecar.istio.io/inject: "true"
+      annotations:
+        sidecar.istio.io/inject: "true"
       labels:
         app: cloud-storage
         version: v1
@@ -70,7 +70,7 @@ spec:
               cpu: "5m"
             limits:
               memory: "150Mi"
-              cpu: "50m"
+              cpu: "200m"
           livenessProbe:
             tcpSocket:
               port: 8080
@@ -123,8 +123,8 @@ spec:
       version: v1
   template:
     metadata:
-      #annotations:
-      #  sidecar.istio.io/inject: "true"
+      annotations:
+        sidecar.istio.io/inject: "true"
       labels:
         app: watson-vision
         version: v1

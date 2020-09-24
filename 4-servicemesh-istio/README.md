@@ -25,7 +25,7 @@ git checkout slow-app
 skaffold dev
 ```
 
-## Checkout the fixed fast app
+## Checkout the fixed fast app and instrumented
 ```
 git checkout master
 skaffold dev
