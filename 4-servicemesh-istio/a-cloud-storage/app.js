@@ -39,7 +39,9 @@ app.post('/api/classify', async (req, res, next) => {
     model: model
   }
   try {
-    const response = await classify('/api/classify', classifyParams)
+    //FIXME: easter egg here
+    const response = await classify('/api/classify', classifyParams
+    //const response = await classify('/api/classify', classifyParams, getTracingHeaders(req))
     res.json(response)
   } catch (err) {
     next(err)

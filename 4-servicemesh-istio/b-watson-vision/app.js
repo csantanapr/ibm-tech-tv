@@ -4,6 +4,10 @@ const app = express()
 
 require('./config/express')(app)
 
+app.use(require('./config/tracing.js'))
+const opentracing = require('opentracing')
+const tracer = opentracing.globalTracer()
+
 let watson
 try {
   watson = new VisualRecognitionV3({
@@ -29,11 +33,21 @@ app.post('/api/classify', async (req, res, next) => {
     classifierIds: [model]
   }
   try {
+    const span = tracer.startSpan('watson-call', { childOf: req.span })
     const response = await watson.classify(classifyParams)
-    res.json(response)
+    span.setTag('response', response)
+    span.finish()
+    processWatsonData(res, response, span)
   } catch (err) {
     next(err)
   }
 })
+
+function processWatsonData(res, response, parent){
+  const span = tracer.startSpan('process-data', { childOf: parent })
+  span.log({ event: 'process', message: 'simulate some process work with the data' })
+  //FIXME: easter egg here
+  setTimeout(function(){res.json(response); span.finish();},5000)
+}
 
 module.exports = app
