@@ -12,6 +12,13 @@ spec:
   selector:
     app: cloud-storage
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cloud-storage
+  labels:
+    account: cloud-storage
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -42,6 +49,7 @@ spec:
         app: cloud-storage
         version: v1
     spec:
+      serviceAccountName: cloud-storage
       containers:
         - name: cloud-storage
           image: csantanapr/ibm-tech-tv-storage
@@ -82,6 +90,13 @@ spec:
   selector:
     app: watson-vision
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: watson-vision
+  labels:
+    account: watson-vision
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -111,6 +126,7 @@ spec:
         app: watson-vision
         version: v1
     spec:
+      serviceAccountName: cloud-storage
       containers:
         - name: watson-vision
           image: csantanapr/ibm-tech-tv-vision
