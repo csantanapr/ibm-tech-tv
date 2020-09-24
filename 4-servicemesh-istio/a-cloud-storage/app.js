@@ -56,7 +56,11 @@ app.post('/api/classify', async (req, res, next) => {
 function getTracingHeaders (req) {
   const contextHeaders = {}
   Object.keys(req.headers).forEach(function (key) {
-    if (key.toLowerCase().startsWith('x-b3') || key.toLowerCase() === 'x-request-id' || key.toLowerCase() === 'b3') {
+    if (key.toLowerCase().startsWith('x-b3') ||
+        key.toLowerCase() === 'x-request-id' ||
+        key.toLowerCase() === 'b3' ||
+        key.toLowerCase() === 'x-ot-span-context' ||
+        key.toLowerCase() === 'user-agent') {
       contextHeaders[key] = req.headers[key]
     }
   })
