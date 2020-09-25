@@ -20,7 +20,7 @@ app.get('/api/storage', async (req, res, next) => {
   try {
     const objectName = req.query.ext ? `${uuid.v4()}.${req.query.ext}` : uuid.v4()
     // FIXME: easter egg here
-    blockCpuFor(10000000)
+    //blockCpuFor(10000000)
     const putUrl = await getUrls('putObject', objectName)
     const getUrl = await getUrls('getObject', objectName)
     res.json({ putUrl: putUrl, getUrl: getUrl })
@@ -40,7 +40,7 @@ app.post('/api/classify', async (req, res, next) => {
   }
   try {
     // FIXME: easter egg here
-    const propaGate = false
+    const propaGate = true
     let response
     if (propaGate) {
       response = await classify('/api/classify', classifyParams, getTracingHeaders(req))
@@ -56,7 +56,11 @@ app.post('/api/classify', async (req, res, next) => {
 function getTracingHeaders (req) {
   const contextHeaders = {}
   Object.keys(req.headers).forEach(function (key) {
-    if (key.toLowerCase().startsWith('x-b3') || key.toLowerCase() === 'x-request-id' || key.toLowerCase() === 'b3') {
+    if (key.toLowerCase().startsWith('x-b3') ||
+        key.toLowerCase() === 'x-request-id' ||
+        key.toLowerCase() === 'b3' ||
+        key.toLowerCase() === 'x-ot-span-context' ||
+        key.toLowerCase() === 'user-agent') {
       contextHeaders[key] = req.headers[key]
     }
   })
