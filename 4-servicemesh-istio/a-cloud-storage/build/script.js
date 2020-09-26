@@ -21,7 +21,7 @@ function uploadImage () {
     setMainDisplayImage(imageData)
     const ext = getFileExtention(imageData)
     document.getElementById('aiData').innerHTML = 'Uploading file...'
-    const response = await fetch(`/api/storage?ext=${ext}`)
+    const response = await fetch(`${location.href}/api/storage?ext=${ext}`)
     if (response.status >= 400) {
       document.getElementById('aiData').innerHTML = 'Error: Getting signed url ' + response.statusText
       return response
@@ -42,7 +42,7 @@ function uploadImage () {
 }
 const classifyImage = async (url, model) => {
   document.getElementById('aiData').innerHTML = 'Detecting objects...'
-  const response = await fetch('/api/classify', {
+  const response = await fetch(`${location.href}/api/classify`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',

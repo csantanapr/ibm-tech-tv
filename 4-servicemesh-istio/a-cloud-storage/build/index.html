@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <title>The File Uploader</title>
-  <link rel="stylesheet" type = "text/css" href="style.css">
+  <title>The best AI App ever</title>
 </head>
 <body>
-  <script async src="script.js"></script>
-  <h1>The Best AI App ever</h1>
+  <script>
+    var head = document.getElementsByTagName('head')[0];
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = location.href + '/script.js';
+    head.appendChild(script);
+    var style = document.createElement('link');
+    style.type = 'text/css';
+    style.rel = 'stylesheet';
+    style.href = location.href + '/style.css';
+    head.appendChild(style);
+  </script>
+  <h1>The best AI App ever</h1>
   <form id="myform" enctype="multipart/form-data">
     <input id="theFile" type="file" name="body" required>
     <fieldset>
@@ -16,10 +26,10 @@
       <input type="radio" id="food" name="model">
       <label for="food">Food</label>
     </fieldset>
-    
+
   </form>
   <p><button onclick="uploadImage()">Analyze</button></p>
-  
+
   <img src="https://via.placeholder.com/200x200" class="my-image" style="max-width: 200px; height: auto;"></img>
   <p>Objects Detected:</p>
   <p id='aiData'></p>

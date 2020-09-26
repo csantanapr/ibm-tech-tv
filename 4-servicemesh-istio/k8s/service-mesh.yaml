@@ -25,7 +25,11 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /
+        prefix: /tv/  #this will handle the /api/
+    - uri:
+        prefix: /tv  #this will handle the /index.html
+    rewrite:
+      uri: /
     route:
     - destination:
         host: cloud-storage
