@@ -4,7 +4,7 @@ const app = express()
 
 require('./config/express')(app)
 
-// FIXME: easter egg here
+// FIXME: easter egg here, uncomment to fix
 app.use(require('./config/tracing.js'))
 
 const tracer = require('opentracing').globalTracer()
@@ -50,14 +50,14 @@ app.post('/api/classify', async (req, res, next) => {
 })
 
 function processWatsonData (res, response, parent) {
+  // FIXME: easter egg here, set to 0 to fix
+  const delayProcess = 0
   if (parent) {
     const span = tracer.startSpan('process-data', { childOf: parent })
     span.log({ event: 'process', message: 'simulate some process work with the data' })
-    // FIXME: easter egg here
-    setTimeout(function () { res.json(response); span.finish() }, 0)
+    setTimeout(function () { res.json(response); span.finish() }, delayProcess)
   } else {
-    // FIXME: easter egg here
-    setTimeout(function () { res.json(response) }, 0)
+    setTimeout(function () { res.json(response) }, delayProcess)
   }
 }
 
