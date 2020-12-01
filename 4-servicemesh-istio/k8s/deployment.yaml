@@ -158,3 +158,19 @@ spec:
             httpGet:
               path: /health
               port: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: ibm-tech-tv-app
+    app.kubernetes.io/name: ibm-tech-tv-app
+    app.kubernetes.io/part-of: ibm-tech-tv-app
+  name: ibm-tech-tv-app
+spec:
+  to:
+    kind: Service
+    name: cloud-storage
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow
