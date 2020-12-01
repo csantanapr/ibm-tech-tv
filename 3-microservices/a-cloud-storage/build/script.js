@@ -21,11 +21,16 @@ function uploadImage () {
     setMainDisplayImage(imageData)
     const ext = getFileExtention(imageData)
     document.getElementById('aiData').innerHTML = 'Uploading file...'
-    const response = await fetch(`/api/storage?ext=${ext}`)
+    const basePath = location.href.endsWith('/') ? location.href.slice(0,-1) : location.href
+    performance.mark('start_storage')
+    const response = await fetch(`${basePath}/api/storage?ext=${ext}`)
     if (response.status >= 400) {
       document.getElementById('aiData').innerHTML = 'Error: Getting signed url ' + response.statusText
       return response
     }
+    performance.mark('end_storage')
+    performance.measure('storage_measure','start_storage','end_storage')
+    performance.mark('start_upload_s3')
     const data = await response.json()
     const cosResponse = await fetch(data.putUrl, {
       method: 'PUT',
@@ -35,6 +40,8 @@ function uploadImage () {
       document.getElementById('aiData').innerHTML = 'Error: Uploading file ' + cosResponse.statusText
       return response
     }
+    performance.mark('end_upload_s3')
+    performance.measure('upload_s3_measure','start_upload_s3','end_upload_s3')
     const model = document.querySelectorAll('input[id="food"]')[0].checked ? 'food' : 'default'
     await classifyImage(data.getUrl, model)
   }
@@ -42,7 +49,9 @@ function uploadImage () {
 }
 const classifyImage = async (url, model) => {
   document.getElementById('aiData').innerHTML = 'Detecting objects...'
-  const response = await fetch('/api/classify', {
+  const basePath = location.href.endsWith('/') ? location.href.slice(0,-1) : location.href
+  performance.mark('start_analyze')
+  const response = await fetch(`${basePath}/api/classify`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -50,6 +59,8 @@ const classifyImage = async (url, model) => {
     },
     body: JSON.stringify({ url: url, model: model })
   })
+  performance.mark('end_analyze')
+  performance.measure('analyze_measure','start_analyze','end_analyze')
   if (response.status >= 400) {
     document.getElementById('aiData').innerHTML = 'Error: ' + response.statusText
   } else {
@@ -58,6 +69,10 @@ const classifyImage = async (url, model) => {
     const classes = data.result.images[0].classifiers[0].classes
     tableFromJson('aiData', classes)
   }
+  const measures = performance.getEntriesByType('measure');
+    measures.forEach(measureItem => {
+      console.log(`${measureItem.name}: ${measureItem.duration}`);
+    });
 }
 function tableFromJson (div, json) {
   // Create a table.

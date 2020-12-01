@@ -5,14 +5,34 @@
 - Configure Docker Desktop
 - Configure Kubernetes/OpenShift cluster CLI access
 - Install and Configure OpenShift ServiceMesh Operator
+- Create a service instance for Cloud Objects Storage (free plan), bucket, and HMAC credentials
+- Create a service instance for Watson Vision Recogntion (free plan), and credentials
 
 ## Secrets
-Create secret with Watson Visual Recognition and Cloud Object Storage s3 hmac credentials
-```
-cp k8s/secrets.yaml.template secrets.yaml
-```
-Edit and enter your credentials into `secrets.yaml`
 
+### Cloud Obect Storage (cos) Secrets
+Copy the env template
+```
+cp a-cloud-storage/.env.template a-cloud-storage/.env
+```
+Edit the file `a-cloud-storage/.env` with the credentials from the IBM Cloud CLI or UI Console
+
+Create secret with Cloud Object Storage s3 hmac credentials
+```
+oc create secret generic cos --from-env-file=a-cloud-storage/.env
+```
+
+### Watson Vision Secrets
+Copy the env template
+```
+cp b-watson-vision/.env.template b-watson-vision/.env
+```
+Edit the file `b-watson-vision/.env` with the credentials from the IBM Cloud CLI or UI Console
+
+Create secret with Watson Visual Recognition credentials
+```
+oc create secret generic watson --from-env-file=b-watson-vision/.env
+```
 
 ## Change directory
 ```
@@ -25,7 +45,7 @@ git checkout slow-app
 skaffold dev
 ```
 
-## Checkout the fixed fast app
+## Checkout the fixed fast app and instrumented
 ```
 git checkout master
 skaffold dev

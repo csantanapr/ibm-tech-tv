@@ -74,6 +74,7 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 8080
+            initialDelaySeconds: 60
           readinessProbe:
             httpGet:
               path: /health

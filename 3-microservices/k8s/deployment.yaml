@@ -12,6 +12,13 @@ spec:
   selector:
     app: cloud-storage
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cloud-storage
+  labels:
+    account: cloud-storage
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,15 +35,19 @@ metadata:
     app.kubernetes.io/part-of: ibm-tech-tv-app
     app.openshift.io/runtime: nodejs
     app.openshift.io/runtime-version: "14"
+    version: v1
 spec:
   selector:
     matchLabels:
       app: cloud-storage
+      version: v1
   template:
     metadata:
       labels:
         app: cloud-storage
+        version: v1
     spec:
+      serviceAccountName: cloud-storage
       containers:
         - name: cloud-storage
           image: csantanapr/ibm-tech-tv-storage
@@ -55,6 +66,9 @@ spec:
             requests:
               memory: "100Mi"
               cpu: "5m"
+            limits:
+              memory: "150Mi"
+              cpu: "200m"
           livenessProbe:
             tcpSocket:
               port: 8080
@@ -77,6 +91,13 @@ spec:
   selector:
     app: watson-vision
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: watson-vision
+  labels:
+    account: watson-vision
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -92,15 +113,19 @@ metadata:
     app.kubernetes.io/part-of: ibm-tech-tv-app
     app.openshift.io/runtime: nodejs
     app.openshift.io/runtime-version: "14"
+    version: v1
 spec:
   selector:
     matchLabels:
       app: watson-vision
+      version: v1
   template:
     metadata:
       labels:
         app: watson-vision
+        version: v1
     spec:
+      serviceAccountName: watson-vision
       containers:
         - name: watson-vision
           image: csantanapr/ibm-tech-tv-vision
@@ -117,6 +142,9 @@ spec:
             requests:
               memory: "100Mi"
               cpu: "5m"
+            limits:
+              memory: "150Mi"
+              cpu: "100m"
           livenessProbe:
             tcpSocket:
               port: 8080
@@ -124,3 +152,19 @@ spec:
             httpGet:
               path: /health
               port: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: ibm-tech-tv-app
+    app.kubernetes.io/name: ibm-tech-tv-app
+    app.kubernetes.io/part-of: ibm-tech-tv-app
+  name: ibm-tech-tv-app
+spec:
+  to:
+    kind: Service
+    name: cloud-storage
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow

@@ -1,7 +1,8 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: ibm-tech-tv-gateway
+  name: ingressgateway
+  namespace: istio-system
 spec:
   selector:
     istio: ingressgateway # use istio default controller
@@ -21,11 +22,15 @@ spec:
   hosts:
   - "*"
   gateways:
-  - ibm-tech-tv-gateway
+  - istio-system/ingressgateway
   http:
   - match:
     - uri:
-        prefix: /
+        prefix: /tv/  #this will handle the /api/
+    - uri:
+        prefix: /tv  #this will handle the /index.html
+    rewrite:
+      uri: /
     route:
     - destination:
         host: cloud-storage

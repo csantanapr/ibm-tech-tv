@@ -80,7 +80,6 @@ const getUrls = async (operation, fileName, expires) => {
     console.error(err)
     throw err
   }
-
   return response
 }
 
